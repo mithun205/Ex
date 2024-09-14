@@ -25,10 +25,10 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _expenses = [];
   double _totalExpenses = 0;
-  double _totalIncome = 0; // Add a variable for total income
 
   @override
   void initState() {
@@ -44,13 +44,6 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _expenses = List<Map<String, dynamic>>.from(decodedExpenses);
         _calculateTotal();
-      });
-    }
-
-    String? savedIncome = prefs.getString('income'); // Load saved income
-    if (savedIncome != null) {
-      setState(() {
-        _totalIncome = double.parse(savedIncome); // Set total income
       });
     }
   }
@@ -79,15 +72,11 @@ class _HomePageState extends State<HomePage> {
     );
     if (result != null) {
       setState(() {
-        // Update expenses and income if present in the result
-        _expenses.add(result['expense']);
-        _totalIncome = double.parse(result['income']); // Set the total income
+        _expenses.add(result);
         _calculateTotal();
       });
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('expenses', jsonEncode(_expenses));
-      prefs.setString('income', _totalIncome.toString()); // Save the income
     }
   }
 
@@ -101,52 +90,52 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final size = MediaQuery.of(context).size;
-    final height = size.height;
-    final width = size.width;
-
     return Scaffold(
       backgroundColor: Colors.grey[200],
+
       appBar: AppBar(
-        backgroundColor:Colors.grey[200],
-        title: Row(
+        backgroundColor: Colors.transparent,
+        title: const Row(
           children: [
             CircleAvatar(
-              backgroundImage: const AssetImage("asset/images (3).jpeg"),
-              radius:  width * 0.06,
+              backgroundImage: AssetImage("asset/images (3).jpeg"),
+              radius: 23,
             ),
             SizedBox(
-              width: width * 0.02,
+              width: 10,
             ),
-             Column(
+            Column(
               children: [
                 Text('Welcome!',
                     style: TextStyle(
-                        fontSize: width * 0.05,
+                        fontSize: 18,
                         color: Colors.black54,
                         fontWeight: FontWeight.w700)),
                 Text('John Doe',
-                    style: TextStyle(
-                        fontSize: width * 0.06, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
               ],
             ),
           ],
         ),
-        flexibleSpace: Container(),
       ),
+
       body: Column(
         children: [
           Padding(
-            padding:  EdgeInsets.all(width * 0.04),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
-               height: height * 0.25,
-              width: width * 0.9,
-              padding:  EdgeInsets.all(width * 0.06),
+              height: 210,
+              width: 400,
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width * 0.08),
+                borderRadius: BorderRadius.circular(30),
                 gradient: const LinearGradient(
-                  colors: [Colors.blue, Colors.purple, Colors.orange],
+                  colors: [
+                    Color.fromARGB(255, 5, 208, 253),
+                    Color.fromARGB(255, 255, 73, 200),
+                    Color.fromARGB(255, 249, 118, 30)
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -154,24 +143,27 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   const Text('Total Balance',
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500)),
                   const SizedBox(height: 8),
                   Text('\$ $_totalExpenses',
                       style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 40,
+                          fontSize: 43,
                           fontWeight: FontWeight.bold)),
                   Padding(
-                    padding:  EdgeInsets.symmetric(
-                        vertical: height * 0.015, horizontal: width * 0.05),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
                             Container(
-                              width: width * 0.06,
-                              height: width * 0.06,
+                              width: 25,
+                              height: 25,
                               decoration: const BoxDecoration(
                                   color: Colors.white30,
                                   shape: BoxShape.circle),
@@ -183,10 +175,10 @@ class _HomePageState extends State<HomePage> {
                               )),
                             ),
                             const SizedBox(width: 8),
-                            Column(
+                            const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Income',
                                   style: TextStyle(
                                       fontSize: 12,
@@ -194,21 +186,21 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
-                                  '\$ $_totalIncome',
-                                  style: const TextStyle(
+                                  "\$ 300000", 
+                                  style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ],
-                            ),
+                            )
                           ],
                         ),
                         Row(
                           children: [
                             Container(
-                               width: width * 0.06,
-                              height: width * 0.06,
+                              width: 25,
+                              height: 25,
                               decoration: const BoxDecoration(
                                   color: Colors.white30,
                                   shape: BoxShape.circle),
@@ -223,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Expenses',
                                   style: TextStyle(
                                       fontSize: 14,
@@ -232,44 +224,45 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Text(
                                   '\$ $_totalExpenses',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ],
-                            ),
+                            )
                           ],
-                        ),
+                        )
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.all(width * 0.04),
+
+          const SizedBox(height: 10,),
+
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Transactions",
-                  style: TextStyle(fontSize: width * 0.06, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "View All",
                   style: TextStyle(
-                      fontSize: width * 0.045,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: Colors.black54),
-                ),
+                )
               ],
             ),
           ),
+
           Expanded(
             child: ListView.builder(
               itemCount: _expenses.length,
@@ -282,13 +275,13 @@ class _HomePageState extends State<HomePage> {
                         onPressed: (context) => _deleteExpense(index),
                         icon: Icons.delete,
                         backgroundColor: Colors.red.shade300,
-                        borderRadius: BorderRadius.circular(width * 0.03),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ],
                   ),
                   child: Card(
-                    margin:  EdgeInsets.symmetric(
-                        vertical: height * 0.015, horizontal: width * 0.05),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -309,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w600,
                             color: Colors.grey[600]),
                       ),
-                      trailing: const Icon(Icons.drag_handle),
+                      trailing: Icon(Icons.drag_handle),
                     ),
                   ),
                 );
@@ -318,9 +311,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
         elevation: 20,
-        shape: const CircleBorder(),
+        shape: CircleBorder(),
         backgroundColor: Colors.purpleAccent,
         onPressed: _navigateToAddExpensePage,
         child: const Icon(
@@ -330,6 +324,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         child: BottomNavigationBar(
@@ -337,9 +332,10 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: true,
           showUnselectedLabels: false,
           elevation: 0,
-          items: const [
+          items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.graphic_eq), label: 'Stats')
+            BottomNavigationBarItem(
+                icon: Icon(Icons.graphic_eq), label: 'Stats')
           ],
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
