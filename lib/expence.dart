@@ -1,67 +1,70 @@
 import 'package:flutter/material.dart';
 
-
 class AddExpensePage extends StatefulWidget {
-  const AddExpensePage({Key? key}) : super(key: key);
+  const AddExpensePage({super.key});
 
   @override
-  State<AddExpensePage> createState() => _AddExpensePageState();
+  _AddExpensePageState createState() => _AddExpensePageState();
 }
 
 class _AddExpensePageState extends State<AddExpensePage> {
-  final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _incomeController = TextEditingController(); // Add income controller
+  final _amountController = TextEditingController();
+  final _descriptionController = TextEditingController();
+ 
 
   _saveExpense() {
     String amount = _amountController.text;
     String description = _descriptionController.text;
-    String income = _incomeController.text; // Get income input
+     
 
-    if (amount.isNotEmpty && description.isNotEmpty ) {
+    if (amount.isNotEmpty && description.isNotEmpty) {
+    
       Map<String, dynamic> newExpense = {
         'amount': amount,
         'description': description,
+       
       };
-      Navigator.pop(context, {'expense': newExpense, 'income': income}); // Pass income as well
+      Navigator.pop(context, newExpense);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.grey[200],
-     appBar: AppBar(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [IconButton(onPressed:(){
-            Navigator.pop(context); 
-        }, icon:Icon(Icons.close_outlined))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.close_outlined))
+        ],
         backgroundColor: Colors.transparent,
-       
       ),
 
-      body:Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Add Expense', style: TextStyle(fontSize: 24)),
-              SizedBox(
-                height: 20,
-              ),
+              const Text('Add Expense',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                  
+              const SizedBox(height: 20,),
+
               Padding(
                 padding: const EdgeInsets.only(right: 40, left: 40),
                 child: TextField(
                   textAlign: TextAlign.center,
-                        
                   cursorColor: Colors.black,
                   cursorHeight: 30,
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(25),
+                    contentPadding: const EdgeInsets.all(25),
                     labelText: 'Amount',
                     fillColor: Colors.white,
                     filled: true,
@@ -70,24 +73,26 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
-                      borderSide: BorderSide(
-                          color: Colors.white), // White border when not focused
+                      borderSide: const BorderSide(
+                          color: Colors.white), 
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
-                          width: 2), // White border when focused
+                          width: 2), 
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 35),
+
+              const SizedBox(height: 35),
+
               TextField(
                 cursorColor: Colors.black,
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(20),
+                  contentPadding: const EdgeInsets.all(20),
                   labelText: 'Note',
                   fillColor: Colors.white,
                   filled: true,
@@ -96,74 +101,51 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        color: Colors.white), // White border when not focused
+                    borderSide: const BorderSide(
+                        color: Colors.white), 
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                         color: Colors.grey,
-                        width: 2), // White border when focused
+                        width: 2),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _incomeController, // Income input field
-              keyboardType: TextInputType.number, //---------------------------------
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    labelText: 'Income',
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                          color: Colors.white), // White border when not focused
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 2), // White border when focused
-                    )),
-              ),
-              SizedBox(height: 20),
-              
 
+              const SizedBox(height: 290),
 
-              SizedBox(height: 250),
               Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.purple, Colors.orange],
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 5, 208, 253),
+                      Color.fromARGB(255, 255, 73, 200),
+                      Color.fromARGB(255, 249, 118, 30)
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(
-                      15), // Match the button's border radius
+                      15), 
                 ),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 160, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 140, vertical: 15),
                     backgroundColor: Colors
-                        .transparent, // Make button background transparent
+                        .transparent, 
                     shadowColor: Colors
-                        .transparent, // Remove shadow to show gradient clearly
+                        .transparent, 
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  child: Text(
-                    'Save',
+                  onPressed: _saveExpense,
+                  child: const Text(
+                    'SAVE',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
-                  onPressed: _saveExpense,
                 ),
               ),
             ],
