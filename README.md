@@ -1,4 +1,4 @@
-# contact_app
+# Expence tracker app
 
 A new Flutter project.
 
