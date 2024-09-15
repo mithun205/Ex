@@ -19,6 +19,7 @@ class ExpenseTrackerApp extends StatelessWidget {
   }
 }
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -29,6 +30,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _expenses = [];
   double _totalExpenses = 0;
+
+
 
   @override
   void initState() {
@@ -312,16 +315,32 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
-      floatingActionButton: FloatingActionButton(
-        elevation: 20,
-        shape: CircleBorder(),
-        backgroundColor: Colors.purpleAccent,
-        onPressed: _navigateToAddExpensePage,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      floatingActionButton: Container(
+  height: 56.0,
+  width: 56.0,
+  decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    gradient: const LinearGradient(
+      colors: [
+        Color.fromARGB(255, 5, 208, 253),
+        Color.fromARGB(255, 255, 73, 200),
+        Color.fromARGB(255, 249, 118, 30)
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  ),
+  child: FloatingActionButton(
+    elevation: 20,  // Remove shadow to make gradient more prominent
+    backgroundColor: Colors.transparent,  // Transparent to show gradient
+    onPressed: _navigateToAddExpensePage,
+    child: const Icon(
+      Icons.add,
+      color: Colors.white,
+    ),
+  ),
+),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       
