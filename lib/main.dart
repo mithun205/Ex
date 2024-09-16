@@ -322,9 +322,9 @@ class _HomePageState extends State<HomePage> {
     shape: BoxShape.circle,
     gradient: const LinearGradient(
       colors: [
-        Color.fromARGB(255, 5, 208, 253),
+        Color.fromARGB(255, 244, 135, 63),
         Color.fromARGB(255, 255, 73, 200),
-        Color.fromARGB(255, 249, 118, 30)
+        Color.fromARGB(255, 34, 213, 253),       
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
